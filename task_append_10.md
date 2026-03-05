@@ -1,0 +1,7 @@
+- [ ] **Phase 10: Glassmorphism Theme & First Person Rewrite**
+  - [ ] Update `globals.css` with the bright blue accent color and CSS variables needed for blue-tinted glassmorphism.
+  - [ ] Update `src/components/navigation/Navbar.module.css` to use a blue, frosted glass backdrop.
+  - [ ] Rewrite `src/app/page.tsx` text to the first person, setup custom GSAP `.stagger` ease curves for text appearance in blue, and link the provided uploaded images using generic placeholder paths.
+  - [ ] Apply glassmorphism styling to `src/app/page.module.css`.
+  - [ ] Rewrite `src/app/achievements/page.tsx` text to the first person and apply the blue GSAP stagger animation.
+  - [ ] Apply glassmorphism styling to the cards in `src/app/achievements/page.module.css`.

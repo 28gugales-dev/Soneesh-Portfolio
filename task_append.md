@@ -1,0 +1,6 @@
+- [ ] **Phase 8: Testimonials Integration (shadcn/ui & Tailwind)**
+  - [ ] Initialize Tailwind CSS in the Next.js project.
+  - [ ] Initialize shadcn/ui CLI (`npx shadcn-ui@latest init`).
+  - [ ] Install dependencies: `lucide-react`, `clsx`, `tailwind-merge`.
+  - [ ] Create `/components/ui/stagger-testimonials.tsx` with the provided code.
+  - [ ] Update `/src/app/media/page.tsx` (or create a dedicated Testimonials page) to include `<StaggerTestimonials />`.

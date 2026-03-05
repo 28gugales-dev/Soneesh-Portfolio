@@ -1,0 +1,129 @@
+.main {
+    min-height: 100vh;
+    padding: 8rem 4rem 20rem 4rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin-bottom: 2rem;
+    max-width: 700px;
+}
+
+.lineOverflow {
+    overflow: hidden;
+}
+
+.header h1 {
+    font-size: 3.5rem;
+    color: var(--sterile-white);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+}
+
+.intro {
+    font-size: 1.1rem;
+    color: var(--muted-silver);
+}
+
+.masonry {
+    display: flex;
+    flex-direction: column;
+    gap: 12rem;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 6rem;
+}
+
+.itemReversed {
+    flex-direction: row-reverse;
+}
+
+.imageContainer {
+    flex: 1.2;
+    aspect-ratio: 4/3;
+    background-color: rgba(255, 255, 255, 0.03);
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.imagePlaceholderText {
+    color: var(--muted-silver);
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.8rem;
+    opacity: 0.5;
+}
+
+.textContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.textContainer h2 {
+    font-family: var(--font-editorial);
+    font-size: 3.5rem;
+    color: var(--sterile-white);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+
+.textContainer h3 {
+    font-size: 1.2rem;
+    color: var(--deep-cyan);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+}
+
+.textContainer p {
+    color: var(--muted-silver);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    max-width: 500px;
+}
+
+@media (max-width: 1024px) {
+
+    .item,
+    .itemReversed {
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .imageContainer {
+        width: 100%;
+    }
+
+    .textContainer {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .main {
+        padding: 6rem 1.5rem 4rem 1.5rem;
+    }
+
+    .header h1 {
+        font-size: 3rem;
+    }
+
+    .masonry {
+        gap: 8rem;
+    }
+
+    .textContainer h2 {
+        font-size: 2.5rem;
+    }
+}

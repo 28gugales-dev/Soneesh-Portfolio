@@ -1,0 +1,170 @@
+.main {
+    min-height: 100vh;
+    padding: 8rem 4rem 20rem 4rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.lineOverflow {
+    overflow: hidden;
+}
+
+.header h1 {
+    font-size: 3.5rem;
+    color: var(--sterile-white);
+    line-height: 1;
+    margin-bottom: 1rem;
+}
+
+.intro {
+    font-size: 1.1rem;
+    color: var(--muted-silver);
+    max-width: 500px;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    gap: 8rem;
+    max-width: 1200px;
+}
+
+.formContainer {
+    flex: 1;
+    max-width: 600px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.inputGroup label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--sterile-white);
+}
+
+.inputGroup input,
+.inputGroup textarea {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--sterile-white);
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    padding: 0.8rem 0;
+    transition: border-color 0.3s ease;
+    resize: none;
+}
+
+.inputGroup input:focus,
+.inputGroup textarea:focus {
+    outline: none;
+    border-bottom-color: var(--deep-cyan);
+}
+
+.inputGroup input::placeholder,
+.inputGroup textarea::placeholder {
+    color: rgba(160, 170, 178, 0.4);
+}
+
+.submitButton {
+    background: transparent;
+    border: 1px solid var(--sterile-white);
+    color: var(--sterile-white);
+    padding: 1.2rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    border-radius: 4px;
+}
+
+.submitButton:hover {
+    background: var(--sterile-white);
+    color: var(--obsidian);
+}
+
+.infoContainer {
+    flex: 0.5;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.infoBlock h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--deep-cyan);
+    margin-bottom: 1rem;
+}
+
+.infoBlock p {
+    font-size: 1.2rem;
+    color: var(--sterile-white);
+}
+
+.socialLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.socialLinks a {
+    font-size: 1.2rem;
+    color: var(--sterile-white);
+    transition: color 0.3s;
+    width: fit-content;
+}
+
+.socialLinks a:hover {
+    color: var(--deep-cyan);
+}
+
+@media (max-width: 1024px) {
+    .content {
+        flex-direction: column;
+        gap: 6rem;
+    }
+
+    .infoContainer {
+        flex-direction: row;
+        gap: 4rem;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .main {
+        padding: 2rem 1.5rem 4rem 1.5rem;
+    }
+
+    .header h1 {
+        font-size: 3.5rem;
+    }
+
+    .content {
+        gap: 4rem;
+    }
+
+    .infoContainer {
+        flex-direction: column;
+        gap: 3rem;
+    }
+}

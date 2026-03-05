@@ -1,0 +1,7 @@
+- [ ] **Phase 9: Achievements Page & Home Expansion**
+  - [ ] Update `src/app/page.tsx` with scrollable sections detailing Soneesh's overall vision (Research, Advocacy, Writing).
+  - [ ] Add real stock imagery via Unsplash to Home section placeholders.
+  - [ ] Create new route `/achievements` (`src/app/achievements/page.tsx`).
+  - [ ] Implement a timeline or structured grid for his book ("Fasten Your Seatbelt"), Regeneron STS award, Change A Vision nonprofit, and clinical roles.
+  - [ ] Integrate styling for `/achievements` matching the Obsidian Black/Editorial New design system.
+  - [ ] Ensure `<Navbar />` includes the new "Achievements" link.

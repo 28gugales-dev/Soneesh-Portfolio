@@ -1,0 +1,139 @@
+.main {
+    min-height: 100vh;
+    padding: 8rem 4rem 20rem 4rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin-bottom: 2rem;
+    max-width: 600px;
+}
+
+.lineOverflow {
+    overflow: hidden;
+}
+
+.header h1 {
+    font-size: 3.5rem;
+    color: var(--sterile-white);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+}
+
+.intro {
+    font-size: 1.1rem;
+    color: var(--muted-silver);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6rem 4rem;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 3rem;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), background 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(0, 229, 255, 0.3);
+    /* deep cyan accent */
+}
+
+.offsetDown {
+    margin-top: 4rem;
+}
+
+.offsetUp {
+    margin-top: -4rem;
+}
+
+.cardHeader {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.year {
+    color: var(--deep-cyan);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+}
+
+.card h2 {
+    font-size: 2.5rem;
+    color: var(--sterile-white);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--muted-silver);
+    margin-bottom: 2rem;
+}
+
+.description {
+    color: var(--muted-silver);
+    line-height: 1.6;
+    flex-grow: 1;
+    margin-bottom: 2rem;
+}
+
+.readMore {
+    background: transparent;
+    border: 1px solid var(--muted-silver);
+    color: var(--sterile-white);
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.readMore:hover {
+    background: var(--sterile-white);
+    color: var(--obsidian);
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .offsetDown,
+    .offsetUp {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .main {
+        padding: 6rem 1.5rem 4rem 1.5rem;
+    }
+
+    .header h1 {
+        font-size: 3rem;
+    }
+
+    .card {
+        padding: 2rem;
+    }
+}
