@@ -21,61 +21,61 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
         tl.set(".preloader-char-sub", { y: 50, opacity: 0 });
         tl.set(`.${styles.counterWrapper}`, { opacity: 0 });
 
-        // Slower Counter logic (4 seconds total for the whole experience)
+        // Total duration for content: ~2 seconds
         const counterObj = { value: 0 };
         tl.to(counterObj, {
             value: 100,
-            duration: 3.5,
+            duration: 1.5, // Faster counter
             ease: "power2.inOut",
             onUpdate: () => {
                 setCounter(Math.floor(counterObj.value));
             }
         }, 0);
 
-        // Name Reveal - Staggered characters for a premium feel
+        // Name Reveal - Snappier
         tl.to(".preloader-char-main", {
             y: 0,
             opacity: 1,
-            stagger: 0.05,
-            duration: 1.2,
+            stagger: 0.03,
+            duration: 0.8,
             ease: "expo.out",
-        }, 0.3);
+        }, 0.2);
 
         tl.to(".preloader-char-sub", {
             y: 0,
             opacity: 1,
-            stagger: 0.05,
-            duration: 1.2,
+            stagger: 0.03,
+            duration: 0.8,
             ease: "expo.out",
-        }, 0.8);
+        }, 0.5);
 
         // Show counter and line
         tl.to(`.${styles.counterWrapper}`, {
             opacity: 1,
-            duration: 1,
+            duration: 0.5,
             ease: "power2.out"
-        }, 0.5);
+        }, 0.3);
 
         tl.to(`.${styles.line}`, {
             width: "120px",
-            duration: 2.5,
+            duration: 1.5,
             ease: "power2.inOut"
-        }, 0.5);
+        }, 0.3);
 
-        // Final Out Animation - Slower and more deliberate
+        // Final Out Animation - Slower exit as requested ("going away to fast")
         tl.to(`.${styles.content}`, {
-            y: -20,
+            y: -30,
             opacity: 0,
-            duration: 1,
+            duration: 1.2,
             ease: "power4.inOut",
-            delay: 0.5
+            delay: 0.2
         });
 
         tl.to(container.current, {
             y: "-100%",
-            duration: 1.5,
+            duration: 1.8, // Much slower exit
             ease: "expo.inOut"
-        }, "-=0.7");
+        }, "-=1.0");
 
     }, { scope: container });
 

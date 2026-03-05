@@ -10,11 +10,16 @@ import Preloader from "@/components/ui/Preloader";
 
 export default function Home() {
   const container = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !sessionStorage.getItem('preloaderShown');
+    }
+    return true;
+  });
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    // Check if we've already shown the preloader this session
+    // Sync loading state in case of unexpected mismatches
     if (sessionStorage.getItem('preloaderShown')) {
       setLoading(false);
     }
