@@ -16,66 +16,82 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             }
         });
 
-        // Background and initial state
-        tl.set(`.${styles.name}`, { y: "110%", opacity: 0 });
+        // Set initial states
+        tl.set(".preloader-char-main", { y: 50, opacity: 0 });
+        tl.set(".preloader-char-sub", { y: 50, opacity: 0 });
         tl.set(`.${styles.counterWrapper}`, { opacity: 0 });
 
-        // Counter logic
+        // Slower Counter logic (4 seconds total for the whole experience)
         const counterObj = { value: 0 };
         tl.to(counterObj, {
             value: 100,
-            duration: 2.5,
+            duration: 3.5,
             ease: "power2.inOut",
             onUpdate: () => {
                 setCounter(Math.floor(counterObj.value));
             }
         }, 0);
 
-        // Name Reveal - Character reveal or mask reveal
-        tl.to(`.${styles.name}`, {
-            y: "0%",
+        // Name Reveal - Staggered characters for a premium feel
+        tl.to(".preloader-char-main", {
+            y: 0,
             opacity: 1,
-            duration: 1.5,
+            stagger: 0.05,
+            duration: 1.2,
             ease: "expo.out",
-            stagger: 0.1,
-        }, 0.5);
+        }, 0.3);
+
+        tl.to(".preloader-char-sub", {
+            y: 0,
+            opacity: 1,
+            stagger: 0.05,
+            duration: 1.2,
+            ease: "expo.out",
+        }, 0.8);
 
         // Show counter and line
         tl.to(`.${styles.counterWrapper}`, {
             opacity: 1,
-            duration: 0.8,
+            duration: 1,
             ease: "power2.out"
-        }, 0.2);
+        }, 0.5);
 
         tl.to(`.${styles.line}`, {
-            width: "150px",
-            duration: 2,
+            width: "120px",
+            duration: 2.5,
             ease: "power2.inOut"
-        }, 0);
+        }, 0.5);
 
-        // Final Out Animation - A sophisticated fade/scale
+        // Final Out Animation - Slower and more deliberate
         tl.to(`.${styles.content}`, {
-            scale: 1.05,
+            y: -20,
             opacity: 0,
             duration: 1,
             ease: "power4.inOut",
-            delay: 0.3
+            delay: 0.5
         });
 
         tl.to(container.current, {
             y: "-100%",
-            duration: 1.2,
+            duration: 1.5,
             ease: "expo.inOut"
-        }, "-=0.8");
+        }, "-=0.7");
 
     }, { scope: container });
 
     return (
         <div className={styles.container} ref={container}>
             <div className={styles.content}>
-                <div className={styles.nameWrapper}>
-                    <h1 className={`serif ${styles.name}`}>
-                        SONEESH <span className={styles.nameHighlight}>KOTHAGUNDLA</span>
+                <div className={styles.titleContainer}>
+                    <h1 className={`serif ${styles.titleMain}`}>
+                        {"SONEESH".split("").map((char, index) => (
+                            <span key={`pm-${index}`} className="preloader-char-main inline-block">{char}</span>
+                        ))}
+                    </h1>
+                    <h1 className={`serif ${styles.titleSub}`}>
+                        {"KOTHAGUNDLA".split("").map((char, index) => (
+                            <span key={`ps-${index}`} className="preloader-char-sub inline-block">{char}</span>
+                        ))}
                     </h1>
                 </div>
 
