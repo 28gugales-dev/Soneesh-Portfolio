@@ -53,13 +53,19 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                 duration: 1,
                 ease: "power2.out"
             }, "-=0.5")
+            // Progress bar animation
+            .to(`.${styles.progressFill}`, {
+                scaleX: 1,
+                duration: 3,
+                ease: "power2.inOut"
+            }, 0)
             // Final "Unmasking" - scale up the asset and fade out the container
             .to(`.${styles.asset}`, {
                 scale: 1.1,
                 opacity: 0,
                 duration: 1,
                 ease: "power4.inOut",
-                delay: 0.5
+                delay: 0.2
             })
             .to(`.${styles.container}`, {
                 clipPath: "inset(0 0 100% 0)",
