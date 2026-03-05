@@ -16,18 +16,21 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
         tl.set(".preloader-char-main", { y: 50, opacity: 0 });
         tl.set(".preloader-char-sub", { y: 50, opacity: 0 });
         tl.set(`.${styles.counterWrapper}`, { opacity: 0 });
+        tl.set(`.${styles.panelLeft}`, { xPercent: 0 });
+        tl.set(`.${styles.panelRight}`, { xPercent: 0 });
 
-        // Phase 1: Content Reveal (0s - 2.0s)
+        // Phase 1: High-Speed Counter (0s - 1.8s)
         const counterObj = { value: 0 };
         tl.to(counterObj, {
             value: 100,
-            duration: 2.0, // Precision 2s counter
+            duration: 1.8,
             ease: "none",
             onUpdate: () => {
                 setCounter(Math.floor(counterObj.value));
             }
         }, 0);
 
+        // Name Reveal
         tl.to(".preloader-char-main", {
             y: 0,
             opacity: 1,
@@ -52,36 +55,52 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
 
         tl.to(`.${styles.line}`, {
             width: "140px",
-            duration: 2.0,
+            duration: 1.8,
             ease: "power2.inOut"
         }, 0);
 
-        // Phase 2: Smooth Transition Exit (Starts at 2.0s)
+        // Phase 2: Cinematic Holding (2.0s marker)
         tl.addLabel("exit", 2.0);
 
-        // Fade out content slightly
+        // 1. Content Shrink & Fade
         tl.to(`.${styles.content}`, {
-            y: -40,
+            scale: 0.95,
             opacity: 0,
-            duration: 1.2,
-            ease: "power3.inOut"
+            duration: 0.8,
+            ease: "power4.inOut"
         }, "exit");
 
-        // Slide up the container
-        tl.to(container.current, {
-            y: "-100%",
+        // 2. Shutter Panels Reveal (Splitting horizontally)
+        tl.to(`.${styles.panelLeft}`, {
+            xPercent: -100,
             duration: 1.5,
-            ease: "expo.inOut",
-            onStart: () => {
-                // Trigger home page reveal SLIGHTLY after the slide starts for a smooth overlap
-                gsap.delayedCall(0.3, onComplete);
-            }
-        }, "exit+=0.1");
+            ease: "expo.inOut"
+        }, "exit+=0.4");
+
+        tl.to(`.${styles.panelRight}`, {
+            xPercent: 100,
+            duration: 1.5,
+            ease: "expo.inOut"
+        }, "exit+=0.4");
+
+        // 3. Trigger Home Page Reveal
+        tl.call(() => {
+            onComplete();
+        }, [], "exit+=0.8");
+
+        // Remove container once fully opened
+        tl.to(container.current, {
+            display: "none",
+            duration: 0
+        }, "exit+=2.0");
 
     }, { scope: container });
 
     return (
         <div className={styles.container} ref={container}>
+            <div className={`${styles.panel} ${styles.panelLeft}`} />
+            <div className={`${styles.panel} ${styles.panelRight}`} />
+
             <div className={styles.content}>
                 <div className={styles.titleContainer}>
                     <h1 className={`serif ${styles.titleMain}`}>
