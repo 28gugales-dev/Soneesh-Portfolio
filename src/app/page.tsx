@@ -66,10 +66,9 @@ export default function Home() {
         y: 0,
         opacity: 1,
         color: "var(--sky-blue)",
-        stagger: 0.04,
+        stagger: 0.03,
         ease: "expo.out",
-        duration: 1.5,
-        delay: 0.2
+        duration: 1.2,
       })
       .fromTo(".hero-title-char-sub",
         {
@@ -80,10 +79,10 @@ export default function Home() {
           y: 0,
           opacity: 1,
           color: "var(--sterile-white)", // Force white
-          stagger: 0.04,
+          stagger: 0.03,
           ease: "expo.out",
-          duration: 1.5,
-        }, "-=1.2")
+          duration: 1.2,
+        }, "-=1.0")
       .fromTo(".hero-subtitle",
         {
           opacity: 0,
@@ -92,10 +91,10 @@ export default function Home() {
         {
           opacity: 1,
           y: 0,
-          stagger: 0.15,
-          duration: 1.5,
+          stagger: 0.1,
+          duration: 1.2,
           ease: "expo.out"
-        }, "-=1.2");
+        }, "-=1.0");
 
     // Scroll-triggered Vision Sections
     const visionItems = gsap.utils.toArray(".vision-section") as HTMLElement[];

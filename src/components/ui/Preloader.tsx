@@ -50,28 +50,27 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             }, {
                 opacity: 1,
                 y: 0,
-                duration: 1,
+                duration: 0.8,
                 ease: "power2.out"
             }, "-=0.5")
             // Progress bar animation
             .to(`.${styles.progressFill}`, {
                 scaleX: 1,
-                duration: 3,
+                duration: 2.5,
                 ease: "power2.inOut"
             }, 0)
             // Final "Unmasking" - scale up the asset and fade out the container
             .to(`.${styles.asset}`, {
-                scale: 1.1,
+                scale: 1.05,
                 opacity: 0,
-                duration: 1,
-                ease: "power4.inOut",
-                delay: 0.2
-            })
+                duration: 0.8,
+                ease: "power2.inOut",
+            }, "+=0.2")
             .to(`.${styles.container}`, {
                 clipPath: "inset(0 0 100% 0)",
-                duration: 1.2,
+                duration: 1.5,
                 ease: "expo.inOut"
-            }, "-=0.8");
+            }, "-=0.6");
     }, { scope: container });
 
     return (
