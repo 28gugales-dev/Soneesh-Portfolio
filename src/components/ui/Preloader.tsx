@@ -19,80 +19,79 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
         tl.set(`.${styles.panelLeft}`, { xPercent: 0 });
         tl.set(`.${styles.panelRight}`, { xPercent: 0 });
 
-        // Phase 1: High-Speed Counter (0s - 1.8s)
+        // Phase 1: Controlled Counter (0s - 2.5s)
+        // Forced duration of 2.5s to ensure "lasting roughly 2 seconds"
         const counterObj = { value: 0 };
         tl.to(counterObj, {
             value: 100,
-            duration: 1.8,
-            ease: "none",
+            duration: 2.5,
+            ease: "power1.inOut",
             onUpdate: () => {
                 setCounter(Math.floor(counterObj.value));
             }
         }, 0);
 
-        // Name Reveal
+        // Name Reveal Staggered
         tl.to(".preloader-char-main", {
             y: 0,
             opacity: 1,
-            stagger: 0.04,
+            stagger: 0.05,
             duration: 1.0,
             ease: "expo.out",
-        }, 0.2);
+        }, 0.5);
 
         tl.to(".preloader-char-sub", {
             y: 0,
             opacity: 1,
-            stagger: 0.04,
+            stagger: 0.05,
             duration: 1.0,
             ease: "expo.out",
-        }, 0.6);
+        }, 1.0);
 
         tl.to(`.${styles.counterWrapper}`, {
             opacity: 1,
             duration: 0.8,
             ease: "power2.out"
-        }, 0.4);
+        }, 0.8);
 
         tl.to(`.${styles.line}`, {
             width: "140px",
-            duration: 1.8,
+            duration: 2.5,
             ease: "power2.inOut"
         }, 0);
 
-        // Phase 2: Cinematic Holding (2.0s marker)
-        tl.addLabel("exit", 2.0);
+        // Phase 2: Cinematic Shutter (Starts after 2.5s)
+        tl.addLabel("exit", 2.5);
 
-        // 1. Content Shrink & Fade
+        // 1. Content Fade Out
         tl.to(`.${styles.content}`, {
-            scale: 0.95,
             opacity: 0,
-            duration: 0.8,
-            ease: "power4.inOut"
+            scale: 0.95,
+            filter: "blur(10px)",
+            duration: 0.6,
+            ease: "power2.inOut"
         }, "exit");
 
-        // 2. Shutter Panels Reveal (Splitting horizontally)
+        // 2. Twin Shutter Split
         tl.to(`.${styles.panelLeft}`, {
             xPercent: -100,
-            duration: 1.5,
+            duration: 1.8,
             ease: "expo.inOut"
-        }, "exit+=0.4");
+        }, "exit+=0.2");
 
         tl.to(`.${styles.panelRight}`, {
             xPercent: 100,
-            duration: 1.5,
+            duration: 1.8,
             ease: "expo.inOut"
-        }, "exit+=0.4");
+        }, "exit+=0.2");
 
-        // 3. Trigger Home Page Reveal
+        // 3. Reveal Home Page
         tl.call(() => {
             onComplete();
-        }, [], "exit+=0.8");
+        }, [], "exit+=1.0");
 
-        // Remove container once fully opened
-        tl.to(container.current, {
-            display: "none",
-            duration: 0
-        }, "exit+=2.0");
+        // Cleanup
+        tl.set(container.current, { display: "none" }, "exit+=3.0");
 
     }, { scope: container });
 

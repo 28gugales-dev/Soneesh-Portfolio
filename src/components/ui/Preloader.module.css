@@ -15,15 +15,18 @@
 .panel {
     position: absolute;
     top: 0;
-    width: 50.5%;
-    /* Slight overlap to prevent gap */
-    height: 100%;
+    width: 50vw;
+    /* Exact half width */
+    height: 100vh;
     background-color: var(--obsidian);
-    z-index: -1;
+    /* Ensure this is solid black */
+    z-index: 5;
+    /* Above content background, below text content */
 }
 
 .panelLeft {
     left: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .panelRight {
@@ -39,6 +42,7 @@
     text-align: center;
     gap: 2.5rem;
     z-index: 10;
+    /* Above panels */
 }
 
 .titleContainer {

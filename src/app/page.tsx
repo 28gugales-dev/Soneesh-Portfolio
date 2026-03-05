@@ -10,18 +10,22 @@ import Preloader from "@/components/ui/Preloader";
 
 export default function Home() {
   const container = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return !sessionStorage.getItem('preloaderShown');
-    }
-    return true;
-  });
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    // Sync loading state in case of unexpected mismatches
-    if (sessionStorage.getItem('preloaderShown')) {
+    // Force preloader to show on localhost if not specifically marked shown
+    const isShown = sessionStorage.getItem('preloaderShown');
+    if (isShown) {
       setLoading(false);
+    } else {
+      setLoading(true);
+    }
+
+    // DEBUG: Allow resetting by adding ?reset=true to URL
+    if (window.location.search.includes('reset=true')) {
+      sessionStorage.removeItem('preloaderShown');
+      window.location.search = '';
     }
   }, []);
 
