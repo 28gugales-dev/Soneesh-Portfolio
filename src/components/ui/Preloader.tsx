@@ -16,16 +16,13 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
         tl.set(".preloader-char-main", { y: 50, opacity: 0 });
         tl.set(".preloader-char-sub", { y: 50, opacity: 0 });
         tl.set(`.${styles.counterWrapper}`, { opacity: 0 });
-        tl.set(`.${styles.panelLeft}`, { xPercent: 0 });
-        tl.set(`.${styles.panelRight}`, { xPercent: 0 });
 
-        // Phase 1: Controlled Counter (0s - 2.5s)
-        // Forced duration of 2.5s to ensure "lasting roughly 2 seconds"
+        // Phase 1: Controlled Counter (0s - 2.0s)
         const counterObj = { value: 0 };
         tl.to(counterObj, {
             value: 100,
-            duration: 2.5,
-            ease: "power1.inOut",
+            duration: 2.0,
+            ease: "none",
             onUpdate: () => {
                 setCounter(Math.floor(counterObj.value));
             }
@@ -56,50 +53,40 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
 
         tl.to(`.${styles.line}`, {
             width: "140px",
-            duration: 2.5,
+            duration: 2.0,
             ease: "power2.inOut"
         }, 0);
 
-        // Phase 2: Cinematic Shutter (Starts after 2.5s)
-        tl.addLabel("exit", 2.5);
+        // Phase 2: Circular "Breakout" Reveal (Starts at 2.0s)
+        tl.addLabel("exit", 2.0);
 
         // 1. Content Fade Out
         tl.to(`.${styles.content}`, {
             opacity: 0,
-            scale: 0.95,
-            filter: "blur(10px)",
-            duration: 0.6,
+            scale: 1.1,
+            duration: 0.8,
             ease: "power2.inOut"
         }, "exit");
 
-        // 2. Twin Shutter Split
-        tl.to(`.${styles.panelLeft}`, {
-            xPercent: -100,
-            duration: 1.8,
-            ease: "expo.inOut"
+        // 2. Circular Reveal - Expanding outward from center
+        // Note: Using circle(100%) to circle(0%) to reveal what's behind
+        tl.to(container.current, {
+            clipPath: "circle(0% at 50% 50%)",
+            duration: 1.5,
+            ease: "expo.inOut",
+            onStart: () => {
+                // Trigger home page reveal SLIGHTLY before the circle fully disappears
+                gsap.delayedCall(0.3, onComplete);
+            }
         }, "exit+=0.2");
-
-        tl.to(`.${styles.panelRight}`, {
-            xPercent: 100,
-            duration: 1.8,
-            ease: "expo.inOut"
-        }, "exit+=0.2");
-
-        // 3. Reveal Home Page
-        tl.call(() => {
-            onComplete();
-        }, [], "exit+=1.0");
 
         // Cleanup
-        tl.set(container.current, { display: "none" }, "exit+=3.0");
+        tl.set(container.current, { display: "none" }, "exit+=2.0");
 
     }, { scope: container });
 
     return (
         <div className={styles.container} ref={container}>
-            <div className={`${styles.panel} ${styles.panelLeft}`} />
-            <div className={`${styles.panel} ${styles.panelRight}`} />
-
             <div className={styles.content}>
                 <div className={styles.titleContainer}>
                     <h1 className={`serif ${styles.titleMain}`}>

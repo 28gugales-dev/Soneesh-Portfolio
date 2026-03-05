@@ -14,8 +14,8 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    // Force preloader to show on localhost if not specifically marked shown
-    const isShown = sessionStorage.getItem('preloaderShown');
+    // Check localStorage for permanent skip
+    const isShown = localStorage.getItem('preloaderShown');
     if (isShown) {
       setLoading(false);
     } else {
@@ -24,13 +24,13 @@ export default function Home() {
 
     // DEBUG: Allow resetting by adding ?reset=true to URL
     if (window.location.search.includes('reset=true')) {
-      sessionStorage.removeItem('preloaderShown');
+      localStorage.removeItem('preloaderShown');
       window.location.search = '';
     }
   }, []);
 
   const handlePreloaderComplete = () => {
-    sessionStorage.setItem('preloaderShown', 'true');
+    localStorage.setItem('preloaderShown', 'true');
     setLoading(false);
   };
 
