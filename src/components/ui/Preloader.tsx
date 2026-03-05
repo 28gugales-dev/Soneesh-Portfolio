@@ -16,8 +16,9 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
         tl.set(".preloader-char-main", { y: 50, opacity: 0 });
         tl.set(".preloader-char-sub", { y: 50, opacity: 0 });
         tl.set(`.${styles.counterWrapper}`, { opacity: 0 });
+        tl.set(container.current, { "--mask-size": "0%" });
 
-        // Phase 1: Controlled Counter (0s - 2.0s)
+        // Phase 1: Managed Counter (0s - 2.0s)
         const counterObj = { value: 0 };
         tl.to(counterObj, {
             value: 100,
@@ -28,7 +29,7 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             }
         }, 0);
 
-        // Name Reveal Staggered
+        // Name Reveal Stagger
         tl.to(".preloader-char-main", {
             y: 0,
             opacity: 1,
@@ -57,26 +58,26 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
             ease: "power2.inOut"
         }, 0);
 
-        // Phase 2: Circular "Breakout" Reveal (Starts at 2.0s)
+        // Phase 2: Outward Circular Reveal (Starts at 2.0s)
         tl.addLabel("exit", 2.0);
 
-        // 1. Content Fade Out
+        // 1. Content Shrink and Fade back
         tl.to(`.${styles.content}`, {
             opacity: 0,
-            scale: 1.1,
+            scale: 0.9,
+            filter: "blur(10px)",
             duration: 0.8,
-            ease: "power2.inOut"
+            ease: "power3.inOut"
         }, "exit");
 
-        // 2. Circular Reveal - Expanding outward from center
-        // Note: Using circle(100%) to circle(0%) to reveal what's behind
+        // 2. Animate the mask-size to reveal outward
         tl.to(container.current, {
-            clipPath: "circle(0% at 50% 50%)",
+            "--mask-size": "150%", // Larger than 100% to ensure coverage
             duration: 1.5,
             ease: "expo.inOut",
             onStart: () => {
-                // Trigger home page reveal SLIGHTLY before the circle fully disappears
-                gsap.delayedCall(0.3, onComplete);
+                // Trigger home page reveal mid-animation
+                gsap.delayedCall(0.5, onComplete);
             }
         }, "exit+=0.2");
 

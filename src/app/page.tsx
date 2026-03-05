@@ -10,23 +10,26 @@ import Preloader from "@/components/ui/Preloader";
 
 export default function Home() {
   const container = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState(true);
+  // Hydration-safe loading state
+  const [loading, setLoading] = useState(false);
+  const [hasChecked, setHasChecked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    // Check localStorage for permanent skip
+    // Aggressive client-side check
     const isShown = localStorage.getItem('preloaderShown');
-    if (isShown) {
-      setLoading(false);
-    } else {
+    const isReset = window.location.search.includes('reset=true');
+
+    if (!isShown || isReset) {
       setLoading(true);
     }
 
-    // DEBUG: Allow resetting by adding ?reset=true to URL
-    if (window.location.search.includes('reset=true')) {
+    if (isReset) {
       localStorage.removeItem('preloaderShown');
-      window.location.search = '';
+      window.history.replaceState({}, '', window.location.pathname);
     }
+
+    setHasChecked(true);
   }, []);
 
   const handlePreloaderComplete = () => {
@@ -154,6 +157,7 @@ export default function Home() {
 
   // We are relying on CSS transitions for the background images
   // to avoid conflicts between React rendering and GSAP mutating inline styles.
+  if (!hasChecked) return <div style={{ background: 'var(--obsidian)', width: '100vw', height: '100vh' }} />;
 
   return (
     <>
