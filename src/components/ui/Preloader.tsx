@@ -10,72 +10,73 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
     const [counter, setCounter] = useState(0);
 
     useGSAP(() => {
-        const tl = gsap.timeline({
-            onComplete: () => {
-                onComplete();
-            }
-        });
+        const tl = gsap.timeline();
 
         // Set initial states
         tl.set(".preloader-char-main", { y: 50, opacity: 0 });
         tl.set(".preloader-char-sub", { y: 50, opacity: 0 });
         tl.set(`.${styles.counterWrapper}`, { opacity: 0 });
 
-        // Total duration for content: ~2 seconds
+        // Phase 1: Content Reveal (0s - 2.0s)
         const counterObj = { value: 0 };
         tl.to(counterObj, {
             value: 100,
-            duration: 1.5, // Faster counter
-            ease: "power2.inOut",
+            duration: 2.0, // Precision 2s counter
+            ease: "none",
             onUpdate: () => {
                 setCounter(Math.floor(counterObj.value));
             }
         }, 0);
 
-        // Name Reveal - Snappier
         tl.to(".preloader-char-main", {
             y: 0,
             opacity: 1,
-            stagger: 0.03,
-            duration: 0.8,
+            stagger: 0.04,
+            duration: 1.0,
             ease: "expo.out",
         }, 0.2);
 
         tl.to(".preloader-char-sub", {
             y: 0,
             opacity: 1,
-            stagger: 0.03,
-            duration: 0.8,
+            stagger: 0.04,
+            duration: 1.0,
             ease: "expo.out",
-        }, 0.5);
+        }, 0.6);
 
-        // Show counter and line
         tl.to(`.${styles.counterWrapper}`, {
             opacity: 1,
-            duration: 0.5,
+            duration: 0.8,
             ease: "power2.out"
-        }, 0.3);
+        }, 0.4);
 
         tl.to(`.${styles.line}`, {
-            width: "120px",
-            duration: 1.5,
+            width: "140px",
+            duration: 2.0,
             ease: "power2.inOut"
-        }, 0.3);
+        }, 0);
 
-        // Final Out Animation - Slower exit as requested ("going away to fast")
+        // Phase 2: Smooth Transition Exit (Starts at 2.0s)
+        tl.addLabel("exit", 2.0);
+
+        // Fade out content slightly
         tl.to(`.${styles.content}`, {
-            y: -30,
+            y: -40,
             opacity: 0,
             duration: 1.2,
-            ease: "power4.inOut",
-            delay: 0.2
-        });
+            ease: "power3.inOut"
+        }, "exit");
 
+        // Slide up the container
         tl.to(container.current, {
             y: "-100%",
-            duration: 1.8, // Much slower exit
-            ease: "expo.inOut"
-        }, "-=1.0");
+            duration: 1.5,
+            ease: "expo.inOut",
+            onStart: () => {
+                // Trigger home page reveal SLIGHTLY after the slide starts for a smooth overlap
+                gsap.delayedCall(0.3, onComplete);
+            }
+        }, "exit+=0.1");
 
     }, { scope: container });
 
@@ -85,12 +86,12 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                 <div className={styles.titleContainer}>
                     <h1 className={`serif ${styles.titleMain}`}>
                         {"SONEESH".split("").map((char, index) => (
-                            <span key={`pm-${index}`} className="preloader-char-main inline-block">{char}</span>
+                            <span key={`pm-${index}`} className="preloader-char-main inline-block">{char === " " ? "\u00A0" : char}</span>
                         ))}
                     </h1>
                     <h1 className={`serif ${styles.titleSub}`}>
                         {"KOTHAGUNDLA".split("").map((char, index) => (
-                            <span key={`ps-${index}`} className="preloader-char-sub inline-block">{char}</span>
+                            <span key={`ps-${index}`} className="preloader-char-sub inline-block">{char === " " ? "\u00A0" : char}</span>
                         ))}
                     </h1>
                 </div>
